@@ -1,15 +1,4 @@
-# JitPack build configuration
 jdk:
   - openjdk21
-
-# Pre-build script
-before_install:
-  - echo "Starting CNMoney plugin build..."
-
-# Build script
 install:
   - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=false -B -V
-
-# Environment variables
-env:
-  MAVEN_OPTS: "-Xmx1024m"
