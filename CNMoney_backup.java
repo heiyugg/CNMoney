@@ -14,7 +14,7 @@ import org.bukkit.plugin.ServicePriority;
 import java.util.logging.Level;
 
 /**
- * CNMoney Multi-Currency Plugin Main Class
+ * CNMoney 多货币插件主类
  * 
  * @author CNMoney Team
  * @version 1.0.0
@@ -23,14 +23,14 @@ public class CNMoney extends JavaPlugin {
     
     private static CNMoney instance;
     
-    // Managers
+    // 管理器
     private ConfigManager configManager;
     private DatabaseManager databaseManager;
     private CurrencyManager currencyManager;
     private cn.money.gui.GUIManager guiManager;
     private ImportExportManager importExportManager;
     
-    // Integrations
+    // 集成
     private VaultIntegration vaultIntegration;
     private PlaceholderIntegration placeholderIntegration;
     
@@ -40,103 +40,103 @@ public class CNMoney extends JavaPlugin {
     @Override
     public void onLoad() {
         instance = this;
-        getLogger().info("CNMoney plugin is loading...");
+        getLogger().info("CNMoney 插件正在加载...");
     }
     
     @Override
     public void onEnable() {
         try {
-            // Initialize config manager
+            // 初始化配置管理器
             this.configManager = new ConfigManager(this);
             if (!configManager.loadConfigs()) {
-                getLogger().severe("Failed to load configuration files! Plugin will be disabled.");
+                getLogger().severe("配置文件加载失败！插件将被禁用。");
                 getServer().getPluginManager().disablePlugin(this);
                 return;
             }
             
-            // Initialize database manager
+            // 初始化数据库管理器
             this.databaseManager = new DatabaseManager(this);
             if (!databaseManager.initialize()) {
-                getLogger().severe("Failed to initialize database! Plugin will be disabled.");
+                getLogger().severe("数据库初始化失败！插件将被禁用。");
                 getServer().getPluginManager().disablePlugin(this);
                 return;
             }
             
-            // Initialize currency manager
+            // 初始化货币管理器
             this.currencyManager = new CurrencyManager(this);
             if (!currencyManager.initialize()) {
-                getLogger().severe("Failed to initialize currency manager! Plugin will be disabled.");
+                getLogger().severe("货币管理器初始化失败！插件将被禁用。");
                 getServer().getPluginManager().disablePlugin(this);
                 return;
             }
 
-            // Initialize GUI manager
+            // 初始化GUI管理器
             this.guiManager = new cn.money.gui.GUIManager(this);
-            getLogger().info("GUI manager initialized.");
+            getLogger().info("GUI管理器已初始化。");
 
-            // Initialize import/export manager
+            // 初始化导入导出管理器
             this.importExportManager = new ImportExportManager(this);
-            getLogger().info("Import/Export manager initialized.");
+            getLogger().info("导入导出管理器已初始化。");
 
-            // Register commands
+            // 注册命令
             registerCommands();
             
-            // Initialize API
+            // 初始化API
             this.api = new CNMoneyAPI(this);
             getServer().getServicesManager().register(CNMoneyAPI.class, api, this, ServicePriority.Normal);
             
-            // Setup third-party integrations
+            // 集成第三方插件
             setupIntegrations();
             
-            // Start scheduled tasks
+            // 启动定时任务
             startScheduledTasks();
             
-            getLogger().info("CNMoney plugin has been successfully enabled!");
-            getLogger().info("Version: " + getDescription().getVersion());
-            getLogger().info("Supported currencies: " + currencyManager.getCurrencyCount());
+            getLogger().info("CNMoney 插件已成功启用！");
+            getLogger().info("版本: " + getDescription().getVersion());
+            getLogger().info("支持的货币数量: " + currencyManager.getCurrencyCount());
             
         } catch (Exception e) {
-            getLogger().log(Level.SEVERE, "Error occurred during plugin enabling!", e);
+            getLogger().log(Level.SEVERE, "插件启用过程中发生错误！", e);
             getServer().getPluginManager().disablePlugin(this);
         }
     }
-
+    
     @Override
     public void onDisable() {
         try {
-            // Save all data
+            // 保存所有数据
             if (currencyManager != null) {
                 currencyManager.saveAllData();
             }
-
-            // Close database connections
+            
+            // 关闭数据库连接
             if (databaseManager != null) {
                 databaseManager.close();
             }
-
-            // Cancel all tasks
+            
+            // 取消所有任务
             getServer().getScheduler().cancelTasks(this);
-
-            getLogger().info("CNMoney plugin has been safely disabled.");
-
+            
+            getLogger().info("CNMoney 插件已安全关闭。");
+            
         } catch (Exception e) {
-            getLogger().log(Level.SEVERE, "Error occurred during plugin disabling!", e);
+            getLogger().log(Level.SEVERE, "插件关闭过程中发生错误！", e);
         } finally {
             instance = null;
         }
     }
-
+    
     /**
-     * Register commands
+     * 注册命令
      */
     private void registerCommands() {
         MoneyCommand moneyCommand = new MoneyCommand(this);
         
-        // Register main command
+        // 注册主命令
         getCommand("cm").setExecutor(moneyCommand);
         getCommand("cm").setTabCompleter(moneyCommand);
         
-        // Register other commands
+        // 注册其他命令
         getCommand("balance").setExecutor(moneyCommand);
         getCommand("balance").setTabCompleter(moneyCommand);
         getCommand("pay").setExecutor(moneyCommand);
@@ -144,72 +144,72 @@ public class CNMoney extends JavaPlugin {
         getCommand("eco").setExecutor(moneyCommand);
         getCommand("eco").setTabCompleter(moneyCommand);
         
-        getLogger().info("Commands registered successfully.");
+        getLogger().info("命令注册完成。");
     }
-
+    
     /**
-     * Setup third-party plugin integrations
+     * 设置第三方插件集成
      */
     private void setupIntegrations() {
-        // Vault integration
+        // Vault集成
         if (configManager.isVaultIntegrationEnabled() && 
             getServer().getPluginManager().getPlugin("Vault") != null) {
             try {
                 this.vaultIntegration = new VaultIntegration(this);
                 if (vaultIntegration.setup()) {
-                    getLogger().info("Vault integration enabled.");
+                    getLogger().info("Vault集成已启用。");
                 } else {
-                    getLogger().warning("Failed to enable Vault integration.");
+                    getLogger().warning("Vault集成启用失败。");
                 }
             } catch (Exception e) {
-                getLogger().log(Level.WARNING, "Error during Vault integration", e);
+                getLogger().log(Level.WARNING, "Vault集成过程中发生错误", e);
             }
         }
         
-        // PlaceholderAPI integration
+        // PlaceholderAPI集成
         if (configManager.isPlaceholderAPIIntegrationEnabled() && 
             getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             try {
                 this.placeholderIntegration = new PlaceholderIntegration(this);
                 if (placeholderIntegration.register()) {
-                    getLogger().info("PlaceholderAPI integration enabled.");
+                    getLogger().info("PlaceholderAPI集成已启用。");
                 } else {
-                    getLogger().warning("Failed to enable PlaceholderAPI integration.");
+                    getLogger().warning("PlaceholderAPI集成启用失败。");
                 }
             } catch (Exception e) {
-                getLogger().log(Level.WARNING, "Error during PlaceholderAPI integration", e);
+                getLogger().log(Level.WARNING, "PlaceholderAPI集成过程中发生错误", e);
             }
         }
     }
-
+    
     /**
-     * Start scheduled tasks
+     * 启动定时任务
      */
     private void startScheduledTasks() {
-        // Auto-save task
-        int saveInterval = configManager.getSaveInterval() * 20; // Convert to ticks
+        // 数据自动保存任务
+        int saveInterval = configManager.getSaveInterval() * 20; // 转换为tick
         getServer().getScheduler().runTaskTimerAsynchronously(this, () -> {
             if (currencyManager != null) {
                 currencyManager.saveAllData();
             }
         }, saveInterval, saveInterval);
         
-        getLogger().info("Scheduled tasks started.");
+        getLogger().info("定时任务已启动。");
     }
     
-    // Getter methods
+    // Getter方法
     public static CNMoney getInstance() {
         return instance;
     }
-
+    
     public ConfigManager getConfigManager() {
         return configManager;
     }
-
+    
     public DatabaseManager getDatabaseManager() {
         return databaseManager;
     }
-
+    
     public CurrencyManager getCurrencyManager() {
         return currencyManager;
     }
@@ -230,20 +230,7 @@ public class CNMoney extends JavaPlugin {
         return placeholderIntegration;
     }
     
-    public CNMoneyAPI getApiInstance() {
+    public CNMoneyAPI getAPI() {
         return api;
-    }
-    
-    /**
-     * Get CNMoney API instance (static method)
-     * For other plugins to call
-     * 
-     * @return CNMoneyAPI instance, or null if plugin is not enabled
-     */
-    public static CNMoneyAPI getAPI() {
-        if (instance == null) {
-            return null;
-        }
-        return instance.getApiInstance();
     }
 }
