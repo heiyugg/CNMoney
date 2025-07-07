@@ -1,0 +1,49 @@
+name: ExamplePlugin
+version: 1.0.0
+main: com.example.plugin.ExamplePlugin
+api-version: 1.21
+author: YourName
+description: CNMoney API 使用示例插件
+
+# 依赖 CNMoney 插件
+depend: [CNMoney]
+
+# 命令定义
+commands:
+  balance:
+    description: 查看货币余额
+    usage: /balance [货币名称]
+    aliases: [bal, money]
+    
+  pay:
+    description: 转账给其他玩家
+    usage: /pay <玩家> <货币> <数量>
+    aliases: [transfer]
+    
+  currencies:
+    description: 查看所有可用货币
+    usage: /currencies
+    aliases: [curr, money-list]
+    
+  exchange:
+    description: 货币兑换
+    usage: /exchange <源货币> <目标货币> <数量>
+    aliases: [convert]
+
+# 权限定义
+permissions:
+  exampleplugin.balance:
+    description: 查看余额权限
+    default: true
+    
+  exampleplugin.pay:
+    description: 转账权限
+    default: true
+    
+  exampleplugin.currencies:
+    description: 查看货币列表权限
+    default: true
+    
+  exampleplugin.exchange:
+    description: 货币兑换权限
+    default: true

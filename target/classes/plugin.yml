@@ -1,0 +1,71 @@
+name: CNMoney
+version: '1.0.0-SNAPSHOT'
+main: cn.money.CNMoney
+api-version: '1.21'
+description: '多货币管理插件 - 支持自定义货币和完整的经济系统'
+author: 'CNMoney Team'
+website: 'https://github.com/cnmoney/cnmoney'
+
+depend: []
+softdepend: [Vault, PlaceholderAPI]
+
+commands:
+  cm:
+    description: '货币管理主命令'
+    usage: '/cm <子命令> [参数...]'
+    aliases: [cnmoney, money]
+    permission: cnmoney.use
+  balance:
+    description: '查看余额'
+    usage: '/balance [玩家] [货币]'
+    aliases: [bal, money]
+    permission: cnmoney.balance
+  pay:
+    description: '转账给其他玩家'
+    usage: '/pay <玩家> <金额> [货币]'
+    permission: cnmoney.pay
+  eco:
+    description: '经济管理命令'
+    usage: '/eco <give|take|set> <玩家> <金额> [货币]'
+    permission: cnmoney.admin
+
+permissions:
+  cnmoney.*:
+    description: '所有CNMoney权限'
+    children:
+      cnmoney.use: true
+      cnmoney.admin: true
+      cnmoney.balance: true
+      cnmoney.balance.others: true
+      cnmoney.pay: true
+      cnmoney.gui: true
+      cnmoney.exchange: true
+    default: op
+  
+  cnmoney.use:
+    description: '使用基本货币功能'
+    default: true
+  
+  cnmoney.admin:
+    description: '管理员权限'
+    default: op
+  
+  cnmoney.balance:
+    description: '查看自己的余额'
+    default: true
+  
+  cnmoney.balance.others:
+    description: '查看其他玩家的余额'
+    default: op
+  
+  cnmoney.pay:
+    description: '转账给其他玩家'
+    default: true
+  
+  cnmoney.gui:
+    description: '使用GUI界面'
+    default: true
+  
+  cnmoney.exchange:
+    description: '使用货币兑换功能'
+    default: true

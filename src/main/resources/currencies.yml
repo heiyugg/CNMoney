@@ -1,0 +1,155 @@
+# CNMoney 货币配置文件
+# 在这里定义所有可用的货币类型
+# 每个货币都可以完全自定义
+
+# 货币定义格式说明:
+# currency_id:           # 货币唯一标识符 (英文, 无空格)
+#   name: '货币名称'       # 显示名称
+#   symbol: '符号'        # 货币符号
+#   plural: '复数形式'    # 复数显示名称
+#   decimals: 2          # 小数位数
+#   default-balance: 0.0 # 新玩家默认余额
+#   enabled: true        # 是否启用此货币
+#   vault-primary: false # 是否作为Vault主货币
+#   exchange-rates: {}   # 兑换汇率 (相对于其他货币)
+#   display:             # 显示设置
+#     color: '§6'        # 颜色代码
+#     format: '{symbol}{amount}' # 显示格式
+#   limits:              # 限制设置
+#     min: 0.0           # 最小持有量
+#     max: -1            # 最大持有量 (-1为无限制)
+
+currencies:
+  # 金币 - 主要货币
+  gold_coin:
+    name: '金币'
+    symbol: '金'
+    plural: '金币'
+    decimals: 2
+    default-balance: 100.0
+    enabled: true
+    vault-primary: true
+    display:
+      color: '§6'
+      format: '§6{amount} 金币'
+      icon: 'GOLD_INGOT'
+    limits:
+      min: 0.0
+      max: -1
+    exchange-rates:
+      silver_coin: 10.0    # 1金币 = 10银币
+      copper_coin: 100.0   # 1金币 = 100铜币
+      diamond_coin: 0.1    # 1金币 = 0.1钻石币
+  
+  # 银币 - 中等货币
+  silver_coin:
+    name: '银币'
+    symbol: '银'
+    plural: '银币'
+    decimals: 2
+    default-balance: 50.0
+    enabled: true
+    vault-primary: false
+    display:
+      color: '§7'
+      format: '§7{amount} 银币'
+      icon: 'IRON_INGOT'
+    limits:
+      min: 0.0
+      max: -1
+    exchange-rates:
+      gold_coin: 0.1       # 1银币 = 0.1金币
+      copper_coin: 10.0    # 1银币 = 10铜币
+      diamond_coin: 0.01   # 1银币 = 0.01钻石币
+  
+  # 铜币 - 基础货币
+  copper_coin:
+    name: '铜币'
+    symbol: '铜'
+    plural: '铜币'
+    decimals: 0
+    default-balance: 200.0
+    enabled: true
+    vault-primary: false
+    display:
+      color: '§c'
+      format: '§c{amount} 铜币'
+      icon: 'COPPER_INGOT'
+    limits:
+      min: 0.0
+      max: -1
+    exchange-rates:
+      gold_coin: 0.01      # 1铜币 = 0.01金币
+      silver_coin: 0.1     # 1铜币 = 0.1银币
+      diamond_coin: 0.001  # 1铜币 = 0.001钻石币
+  
+  # 钻石币 - 高级货币
+  diamond_coin:
+    name: '钻石币'
+    symbol: '钻'
+    plural: '钻石币'
+    decimals: 3
+    default-balance: 1.0
+    enabled: true
+    vault-primary: false
+    display:
+      color: '§b'
+      format: '§b{amount} 钻石币'
+      icon: 'DIAMOND'
+    limits:
+      min: 0.0
+      max: 1000.0
+    exchange-rates:
+      gold_coin: 10.0      # 1钻石币 = 10金币
+      silver_coin: 100.0   # 1钻石币 = 100银币
+      copper_coin: 1000.0  # 1钻石币 = 1000铜币
+  
+  # 绿宝石币 - 特殊货币
+  emerald_coin:
+    name: '绿宝石币'
+    symbol: '绿'
+    plural: '绿宝石币'
+    decimals: 2
+    default-balance: 0.0
+    enabled: true
+    vault-primary: false
+    display:
+      color: '§2'
+      format: '§2{amount} 绿宝石币'
+      icon: 'EMERALD'
+    limits:
+      min: 0.0
+      max: 500.0
+    exchange-rates:
+      gold_coin: 5.0       # 1绿宝石币 = 5金币
+      silver_coin: 50.0    # 1绿宝石币 = 50银币
+      copper_coin: 500.0   # 1绿宝石币 = 500铜币
+      diamond_coin: 0.5    # 1绿宝石币 = 0.5钻石币
+
+# 货币组设置 (用于GUI分组显示)
+currency-groups:
+  basic:
+    name: '基础货币'
+    currencies: [copper_coin, silver_coin, gold_coin]
+    icon: 'GOLD_INGOT'
+  
+  premium:
+    name: '高级货币'
+    currencies: [diamond_coin, emerald_coin]
+    icon: 'DIAMOND'
+
+# 兑换费率设置 (全局)
+exchange-settings:
+  # 基础手续费 (百分比)
+  base-fee: 0.02
+  
+  # 特殊汇率 (覆盖货币自身的汇率设置)
+  special-rates:
+    # 节假日汇率等特殊情况
+    # gold_coin_to_silver_coin: 9.5
+  
+  # 汇率更新间隔 (分钟)
+  rate-update-interval: 60
+  
+  # 是否启用动态汇率
+  dynamic-rates: false

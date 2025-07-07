@@ -1,0 +1,136 @@
+# CNMoney 多货币插件配置文件
+# 版本: 1.0.0
+# 作者: CNMoney Team
+
+# 基本设置
+settings:
+  # 插件语言 (zh_CN, en_US)
+  language: 'zh_CN'
+  
+  # 调试模式
+  debug: false
+  
+  # 数据保存间隔 (秒)
+  save-interval: 300
+  
+  # 默认货币 (必须在currencies.yml中定义)
+  default-currency: 'gold_coin'
+  
+  # 是否启用Vault集成
+  vault-integration: true
+  
+  # 是否启用PlaceholderAPI集成
+  placeholderapi-integration: true
+
+# 数据库设置
+database:
+  # 数据库类型: sqlite, mysql
+  type: 'sqlite'
+  
+  # SQLite设置
+  sqlite:
+    file: 'cnmoney.db'
+  
+  # MySQL设置 (当type为mysql时使用)
+  mysql:
+    host: 'localhost'
+    port: 3306
+    database: 'cnmoney'
+    username: 'root'
+    password: 'password'
+    ssl: false
+    
+# GUI设置
+gui:
+  # GUI标题
+  title: '§6§l货币管理系统'
+  
+  # GUI大小 (9的倍数, 最大54)
+  size: 54
+  
+  # 是否启用GUI音效
+  sound-enabled: true
+  
+  # 刷新间隔 (tick, 20tick = 1秒)
+  refresh-interval: 20
+
+# 货币兑换设置
+exchange:
+  # 是否启用货币兑换
+  enabled: true
+  
+  # 兑换手续费 (百分比, 0.05 = 5%)
+  fee-percentage: 0.02
+  
+  # 最小兑换金额
+  min-amount: 1.0
+  
+  # 最大兑换金额 (-1为无限制)
+  max-amount: -1
+
+# 转账设置
+transfer:
+  # 是否启用转账功能
+  enabled: true
+  
+  # 转账手续费 (百分比)
+  fee-percentage: 0.01
+  
+  # 最小转账金额
+  min-amount: 1.0
+  
+  # 最大转账金额 (-1为无限制)
+  max-amount: -1
+  
+  # 转账冷却时间 (秒)
+  cooldown: 5
+
+# 消息设置
+messages:
+  # 前缀
+  prefix: '§8[§6CNMoney§8] §r'
+  
+  # 成功消息颜色
+  success-color: '§a'
+  
+  # 错误消息颜色
+  error-color: '§c'
+  
+  # 警告消息颜色
+  warning-color: '§e'
+  
+  # 信息消息颜色
+  info-color: '§b'
+
+# 日志设置
+logging:
+  # 是否记录交易日志
+  log-transactions: true
+
+  # 日志文件名
+  log-file: 'transactions.log'
+
+  # 日志保留天数
+  log-retention-days: 30
+
+  # 控制台日志控制
+  console:
+    # 是否显示GUI操作日志 (为玩家 xxx 打开GUI: xxx)
+    gui-operations: false
+
+    # 是否显示数据库连接日志 (数据库连接成功、数据已保存等)
+    database-operations: false
+
+    # 是否显示详细调试信息
+    debug-info: false
+
+# 性能设置
+performance:
+  # 缓存大小
+  cache-size: 1000
+  
+  # 缓存过期时间 (分钟)
+  cache-expire-minutes: 30
+  
+  # 异步处理
+  async-processing: true

@@ -1,0 +1,186 @@
+# CNMoney 消息配置文件
+# 支持颜色代码 (&c, &a, &e 等) 和十六进制颜色 (&#RRGGBB)
+# 支持占位符: {player}, {amount}, {currency}, {balance} 等
+
+# 通用消息
+common:
+  prefix: '&8[&6CNMoney&8] &r'
+  no-permission: '&c你没有权限使用此命令！'
+  player-only: '&c此命令只能由玩家使用！'
+  console-only: '&c此命令只能由控制台使用！'
+  player-not-found: '&c玩家 {player} 不在线或不存在！'
+  invalid-amount: '&c无效的金额！'
+  invalid-currency: '&c货币 {currency} 不存在！'
+  amount-too-small: '&c金额必须大于 {min}！'
+  amount-too-large: '&c金额不能超过 {max}！'
+  insufficient-balance: '&c余额不足！'
+  database-error: '&c数据库错误，请联系管理员！'
+  cooldown: '&c请等待 {time} 秒后再试！'
+
+# 余额相关消息
+balance:
+  self: '&a你的 {currency} 余额: {balance}'
+  others: '&a{player} 的 {currency} 余额: {balance}'
+  all-currencies: '&6&l=== {player} 的所有余额 ==='
+  currency-line: '&e{currency}: {balance}'
+  no-currencies: '&c没有可用的货币！'
+
+# 转账相关消息
+transfer:
+  success-sender: '&a成功转账 {amount} 给 {player}！'
+  success-receiver: '&a收到来自 {player} 的转账: {amount}！'
+  failed: '&c转账失败！{reason}'
+  self-transfer: '&c你不能转账给自己！'
+  fee-deducted: '&e扣除手续费: {fee}'
+  min-amount: '&c转账金额不能少于 {min}！'
+  max-amount: '&c转账金额不能超过 {max}！'
+
+# 兑换相关消息
+exchange:
+  success: '&a成功兑换 {from_amount} 为 {to_amount}！'
+  failed: '&c兑换失败！{reason}'
+  no-rate: '&c没有找到 {from_currency} 到 {to_currency} 的兑换汇率！'
+  fee-deducted: '&e扣除兑换手续费: {fee}'
+  min-amount: '&c兑换金额不能少于 {min}！'
+  max-amount: '&c兑换金额不能超过 {max}！'
+  same-currency: '&c不能兑换相同的货币！'
+  rate-info: '&b当前汇率: 1 {from_currency} = {rate} {to_currency}'
+
+# 管理员命令消息
+admin:
+  give-success: '&a成功给予 {player} {amount}！'
+  give-notify: '&a管理员给予了你 {amount}！'
+  take-success: '&a成功扣除 {player} {amount}！'
+  take-notify: '&c管理员扣除了你 {amount}！'
+  set-success: '&a成功设置 {player} 的余额为 {amount}！'
+  set-notify: '&a管理员设置了你的余额为 {amount}！'
+  reload-success: '&aCNMoney 配置已重新加载！'
+  reload-failed: '&c配置重新加载失败！请查看控制台错误信息。'
+
+# GUI相关消息
+gui:
+  title: '&6&l货币管理系统'
+  balance-title: '&6&l余额查看'
+  exchange-title: '&6&l货币兑换'
+  admin-title: '&6&l管理面板'
+  
+  # 物品显示名称
+  balance-item: '&a余额查看'
+  exchange-item: '&e货币兑换'
+  transfer-item: '&b转账'
+  admin-item: '&c管理面板'
+  close-item: '&7关闭'
+  back-item: '&7返回'
+  next-page: '&a下一页'
+  prev-page: '&a上一页'
+  
+  # 物品描述
+  balance-lore:
+    - '&7点击查看你的余额'
+    - ''
+    - '&e左键: 查看所有货币'
+    - '&e右键: 查看默认货币'
+  
+  exchange-lore:
+    - '&7点击进行货币兑换'
+    - ''
+    - '&e左键: 打开兑换界面'
+    - '&e右键: 查看汇率'
+  
+  transfer-lore:
+    - '&7点击转账给其他玩家'
+    - ''
+    - '&e左键: 打开转账界面'
+  
+  currency-lore:
+    - '&7货币: &f{currency}'
+    - '&7余额: &f{balance}'
+    - '&7符号: &f{symbol}'
+    - ''
+    - '&e左键: 查看详情'
+    - '&e右键: 快速操作'
+  
+  # GUI操作消息
+  click-to-select: '&e点击选择此货币'
+  selected-currency: '&a已选择货币: {currency}'
+  enter-amount: '&e请在聊天框输入金额:'
+  enter-player: '&e请在聊天框输入玩家名:'
+  operation-cancelled: '&c操作已取消'
+  invalid-input: '&c输入无效，操作已取消'
+
+# 帮助消息
+help:
+  header: '&6&l=== CNMoney 命令帮助 ==='
+  footer: '&6&l========================='
+  
+  commands:
+    balance: '&e/cm balance [玩家] [货币] &7- 查看余额'
+    pay: '&e/cm pay <玩家> <金额> [货币] &7- 转账'
+    exchange: '&e/cm exchange &7- 货币兑换'
+    gui: '&e/cm gui &7- 打开GUI界面'
+    info: '&e/cm info &7- 查看插件信息'
+    help: '&e/cm help &7- 显示此帮助'
+    reload: '&c/cm reload &7- 重载配置 (管理员)'
+    eco: '&c/eco <give|take|set> <玩家> <金额> [货币] &7- 经济管理 (管理员)'
+
+# 信息消息
+info:
+  header: '&6&l=== CNMoney 插件信息 ==='
+  version: '&e版本: &f{version}'
+  author: '&e作者: &fCNMoney Team'
+  currencies: '&e支持货币数: &f{count}'
+  default-currency: '&e默认货币: &f{currency}'
+  database: '&e数据库类型: &f{type}'
+  vault: '&eVault集成: &f{status}'
+  placeholder: '&ePlaceholderAPI集成: &f{status}'
+  footer: '&6&l======================'
+
+# 错误消息
+error:
+  command-error: '&c命令执行时发生错误！'
+  database-connection: '&c数据库连接失败！'
+  config-load: '&c配置文件加载失败！'
+  currency-load: '&c货币配置加载失败！'
+  plugin-disabled: '&c插件已被禁用！'
+  feature-disabled: '&c此功能已被禁用！'
+  maintenance: '&c系统维护中，请稍后再试！'
+
+# 成功消息
+success:
+  config-saved: '&a配置文件已保存！'
+  data-saved: '&a数据已保存！'
+  operation-completed: '&a操作完成！'
+  plugin-enabled: '&aCNMoney 插件已启用！'
+  plugin-disabled: '&aCNMoney 插件已禁用！'
+
+# 警告消息
+warning:
+  beta-feature: '&e此功能仍在测试中，可能存在问题！'
+  backup-recommended: '&e建议在操作前备份数据！'
+  high-amount: '&e你正在操作大额资金，请确认无误！'
+  rate-changed: '&e汇率已发生变化！'
+
+# 调试消息 (仅在调试模式下显示)
+debug:
+  player-join: '&7[调试] 玩家 {player} 加入游戏'
+  player-quit: '&7[调试] 玩家 {player} 离开游戏'
+  balance-change: '&7[调试] {player} 的 {currency} 余额变更: {old} -> {new}'
+  transaction: '&7[调试] 交易记录: {type} - {amount} {currency}'
+  database-query: '&7[调试] 数据库查询: {query}'
+  config-reload: '&7[调试] 配置重载完成'
+
+# 时间格式
+time:
+  seconds: '{time} 秒'
+  minutes: '{time} 分钟'
+  hours: '{time} 小时'
+  days: '{time} 天'
+
+# 状态显示
+status:
+  enabled: '&a启用'
+  disabled: '&c禁用'
+  online: '&a在线'
+  offline: '&7离线'
+  loading: '&e加载中...'
+  error: '&c错误'
